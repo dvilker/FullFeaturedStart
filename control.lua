@@ -8,6 +8,11 @@ local function giveGoods(event)
         player.insert({ name = 'construction-robot', count = needRobots })
     end
 
+    local needFuel = settings.global["FullFeaturedStart-fuel"].value - (exists['nuclear-fuel'] or 0)
+    if needRobots > 0 then
+        player.insert({ name = 'nuclear-fuel', count = needFuel })
+    end
+
     local withMk = {}
     for name, _ in pairs(game.equipment_prototypes) do
         local item = game.item_prototypes[name]

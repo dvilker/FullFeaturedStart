@@ -1,3 +1,9 @@
+local grid = table.deepcopy(data.raw["equipment-grid"]["small-equipment-grid"])
+grid.name = "FullFeaturedStart-equipment-grid"
+local size = settings.startup["FullFeaturedStart-equipmentSize"].value
+grid.width = size
+grid.height = size
+
 local armor = table.deepcopy(data.raw["armor"]["light-armor"])
 armor.name = "FullFeaturedStart-tshort-armor"
 armor.icons = { {
@@ -8,8 +14,8 @@ armor.icons = { {
                 } }
 armor.resistances = {}
 armor.order = "a[FullFeaturedStart-tshort-armor]"
-armor.equipment_grid = "small-equipment-grid"
+armor.equipment_grid = "FullFeaturedStart-equipment-grid"
 
 data:extend {
-    armor
+    grid, armor
 }
