@@ -2,36 +2,47 @@ local function giveGoods(event)
     local player = --[[---@type LuaPlayer]]game.players[event.player_index]
     local inventory = player.get_inventory(defines.inventory.character_main)
     local exists = inventory and inventory.get_contents() or {}
+    local doFilter = settings.global["FullFeaturedStart-filter"].value
 
     local needRobots = settings.global["FullFeaturedStart-robots"].value - (exists['construction-robot'] or 0)
     if needRobots > 0 then
         player.insert({ name = 'construction-robot', count = needRobots })
     end
 
-    local needFuel = settings.global["FullFeaturedStart-fuel"].value - (exists['nuclear-fuel'] or 0)
+    local needFuel = settings.global["FullFeaturedStart-fuel"].value - (exists['rocket-fuel'] or 0)
     if needRobots > 0 then
-        player.insert({ name = 'nuclear-fuel', count = needFuel })
+        player.insert({ name = 'rocket-fuel', count = needFuel })
     end
 
-    local withMk = {}
-    for name, _ in pairs(game.equipment_prototypes) do
-        local item = game.item_prototypes[name]
-        if item then
-            local mk = string.match(name, "-?m?k?(%d+)")
-            local uniName = string.gsub(name, "-?m?k?%d+", "")
-            withMk[uniName] = withMk[uniName] or {}
-            local wmk = withMk[uniName]
-            if not wmk.mk or withMk[uniName].mk < mk then
-                wmk.item = item
-                wmk.name = name
-                wmk.mk = mk
+    if doFilter then
+        local withMk = {}
+        for name, _ in pairs(game.equipment_prototypes) do
+            local item = game.item_prototypes[name]
+            if item then
+                local mk = string.match(name, "-?m?k?(%d+)")
+                mk = mk and tonumber(mk) or 1
+                local uniName = string.gsub(name, "-?m?k?%d+", "")
+                withMk[uniName] = withMk[uniName] or {}
+                local wmk = withMk[uniName]
+                if not wmk.mk or wmk.mk < mk then
+                    wmk.item = item
+                    wmk.name = name
+                    wmk.mk = mk
+                end
             end
         end
-    end
-    for _, wmk in pairs(withMk) do
-        local need = wmk.item.stack_size - (exists[wmk.name] or 0)
-        if need > 0 then
-            player.insert({ name = wmk.name, count = wmk.item.stack_size })
+        for _, wmk in pairs(withMk) do
+            local need = wmk.item.stack_size - (exists[wmk.name] or 0)
+            if need > 0 then
+                player.insert({ name = wmk.name, count = wmk.item.stack_size })
+            end
+        end
+    else
+        for name, _ in pairs(game.equipment_prototypes) do
+            local item = game.item_prototypes[name]
+            if item then
+                player.insert({ name = name, count = item.stack_size })
+            end
         end
     end
 

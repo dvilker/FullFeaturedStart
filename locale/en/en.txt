@@ -1,0 +1,14 @@
+! Run build/build.js to apply this file to .cfg !
+
+
+##### FullFeaturedStart
+
+The mod generously gives:
+- how many construction drones do you need.
+- a vest with the right equipment grid size.
+- a stack of all possible items of equipment.
+- allows you to slightly speed up the drones.
+- some rocket fuel to last to the oil refineries (if you happen to have a JetPack). In SE, I recommend not adding fuel - there is already something to fly there.
+- allows you to reduce the size of the items of equipment by a factor to fit more.
+
+In general, everything for a comfortable start!

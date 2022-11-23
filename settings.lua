@@ -44,4 +44,11 @@ data:extend({
         maximum_value = 16,
         order = "05"
     },
+    {
+        type = "bool-setting",
+        name = "FullFeaturedStart-filter",
+        setting_type = "runtime-global",
+        default_value = true,
+        order = "06"
+    },
 })
