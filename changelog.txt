@@ -3,7 +3,7 @@ Version: 0.1.5
 Date: 2022.11.23
   Changes:
     - K2 support
-    - Nuclear file replaced by Rocket fuel
+    - Nuclear fuel replaced by Rocket fuel
     - Option for disabling filter
 ---------------------------------------------------------------------------------------------------
 Version: 0.1.4
